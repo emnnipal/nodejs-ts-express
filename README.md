@@ -1,6 +1,6 @@
-# Custom http triggers
+# Boilerplate for Microservice with Typescript
 
-Microservice for custom http triggers
+Microservice
 
 ## Prerequisites
 
@@ -16,7 +16,7 @@ $ yarn -v
 ```
 
 ## QUICKSTART
-Get environment file from repository admins and run the following:
+Run the following:
 
 ```
 # Install packages
