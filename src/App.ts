@@ -1,8 +1,8 @@
-import * as bodyParser from 'body-parser';
-import cors from 'cors'
-import { api } from './routes/index'
-
 import express, { Application } from 'express'
+import cors from 'cors'
+import helmet from 'helmet'
+import morgan from 'morgan'
+import { api } from './routes/index'
 import verifyToken from './helpers/verifyToken'
 import * as errorHandler from './helpers/errorHandler'
 
@@ -18,8 +18,10 @@ class App {
 
   private setMiddlewares(): void {
     this.express.use(cors())
-    this.express.use(bodyParser.json())
-    this.express.use(bodyParser.urlencoded({ extended: false }))
+    this.express.use(morgan('dev'))
+    this.express.use(express.json())
+    this.express.use(express.urlencoded({ extended: false }))
+    this.express.use(helmet())
     this.express.use(verifyToken)
   }
 
