@@ -1,5 +1,5 @@
 {
-  "name": "api2-cart",
+  "name": "boilerplate-microservice",
   "version": "0.0.1",
   "description": "Boilerplate for node js with typescript.",
   "main": "index.js",
