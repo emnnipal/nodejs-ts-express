@@ -1,4 +1,8 @@
-node_modules
-build
-dist
+node_modules/
 .env
+api-build/
+build/
+.eslintcache
+.vscode
+*-error.log
+coverage/

@@ -1,0 +1,49 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true,
+        "node": true
+    },
+    "extends": [
+        "airbnb-base",
+        "airbnb-typescript/base"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 2021,
+        "sourceType": "module",
+        "project": [
+            "./tsconfig.eslint.json"
+        ]
+    },
+    "plugins": [
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "class-methods-use-this": "off",
+        "linebreak-style": "off",
+        "no-undef": "error",
+        "prefer-default-export": "off",
+        "import/prefer-default-export": "off",
+        "import/order": [
+            "error",
+            {
+                "groups": [
+                    "index",
+                    "internal",
+                    "sibling",
+                    "parent",
+                    "external",
+                    "builtin",
+                    "object",
+                    "type"
+                ],
+                "newlines-between": "always",
+                "alphabetize": {
+                    "order": "asc",
+                    "caseInsensitive": true
+                }
+            }
+        ]
+    }
+}

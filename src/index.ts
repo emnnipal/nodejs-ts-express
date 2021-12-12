@@ -1,13 +1,9 @@
-import app from './App'
-import CONFIG from './config/config'
-import moment from 'moment-timezone'
-import { getTimestamp } from './helpers/logger'
+import app from './App';
+import { logger } from './utils/logger';
 
-moment.tz.setDefault('Asia/Manila');
-
-const PORT = CONFIG.PORT
-const APP = CONFIG.APP
+const PORT = 3000;
+const APP = 'development';
 
 app.listen(PORT, () => {
-  console.log(getTimestamp(), `Listening on port ${PORT}. APP: ${APP}`)
-})
+  logger(`Listening on PORT: ${PORT}, APP: ${APP}`);
+});
