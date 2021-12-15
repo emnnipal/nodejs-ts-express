@@ -1,7 +1,7 @@
 {
-  "name": "api2-cart",
+  "name": "boilerplate-microservice",
   "version": "0.0.1",
-  "description": "Middleware for different ecommerce and DPH",
+  "description": "Boilerplate for node js with typescript.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,9 +11,9 @@
     "prepare": "husky install"
   },
   "keywords": [
-    "api2cart",
-    "dph",
-    "integration"
+    "node",
+    "api",
+    "microservice"
   ],
   "author": "Emmanuel G. Nipal Jr.",
   "license": "ISC",
