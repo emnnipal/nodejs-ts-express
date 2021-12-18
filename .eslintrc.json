@@ -2,11 +2,14 @@
     "env": {
         "browser": true,
         "es2021": true,
-        "node": true
+        "node": true,
+        "jest/globals": true
     },
     "extends": [
         "airbnb-base",
-        "airbnb-typescript/base"
+        "airbnb-typescript/base",
+        "plugin:jest/recommended",
+        "plugin:jest/style"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -17,7 +20,8 @@
         ]
     },
     "plugins": [
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "jest"
     ],
     "rules": {
         "class-methods-use-this": "off",
