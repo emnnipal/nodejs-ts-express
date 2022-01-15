@@ -20,5 +20,4 @@ jobs:
         run: yarn lint
 
       - name: Run tests
-        run: yarn test --maxWorkers=4 --no-color --coverage=false --onlyChanged
-        # run: yarn test --maxWorkers=4 --no-color --coverage=false --changedSince=${{ github.event.pull_request.head.sha }}
+        run: yarn test --maxWorkers=4 --no-color --coverage=false --changedSince=${{ github.event.pull_request.head.sha }}

@@ -8,5 +8,4 @@ export const logFormat = (module: string) => [`[${getDateTime()}]`, `[${module}]
 export const logger = {
   info: (module: string, ...args: unknown[]) => console.log(...logFormat(module), ...args),
   error: (module: string, ...args: unknown[]) => console.error(...logFormat(module), ...args),
-  test: null,
 };
