@@ -1,0 +1,23 @@
+name: 'Unit tests & linter'
+on: push
+
+jobs:
+  validations:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          ref: ${{ github.ref }}
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16.13.0
+          cache: 'yarn'
+
+      - run: yarn install --immutable --immutable-cache
+
+      - name: Run ESLint
+        run: yarn lint
+
+      - name: Run tests
+        run: yarn test -- --maxWorkers=4 --no-color --coverage=false --changedSince=${{ github.event.pull_request.head.sha }}
