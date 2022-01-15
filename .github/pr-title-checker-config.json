@@ -1,0 +1,17 @@
+{
+  "LABEL": {
+    "name": "invalid PR title",
+    "description": "Missing conventional commit type on the PR title.",
+    "color": "F03505"
+  },
+  "CHECKS": {
+    "regexp": "(fix|feat|test|style|chore|refactor|docs)(\\(.+\\))?:[ ]",
+    "regexpFlags": "i",
+    "ignoreLabels": ["ignore-pr-title"]
+  },
+  "MESSAGES": {
+    "success": "All OK",
+    "failure": "Failing CI test",
+    "notice": ""
+  }
+}
