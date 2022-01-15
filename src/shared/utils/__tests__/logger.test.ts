@@ -1,4 +1,4 @@
-import { getDateTime, logger } from '../logger';
+import { getDateTime, logger } from '../Logger';
 
 describe('loggers', () => {
   const loggerSpy = jest.spyOn(console, 'log').mockImplementation();
