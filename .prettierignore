@@ -3,11 +3,7 @@ dist/
 build/
 api-build/
 coverage/
-commitlint.config.js
-jest.*.ts
-babel.config.js
 .env
 .eslintcache
 .vscode
 *-error.log
-global.d.ts

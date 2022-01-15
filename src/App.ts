@@ -1,4 +1,5 @@
-import { logger } from './utils/logger';
+import { routes } from './routes';
+import APIMiddleware from './shared/middlewares/Api';
 
 import cors from 'cors';
 import express, { Application } from 'express';
@@ -19,16 +20,18 @@ class App {
     this.express.use(
       cors({
         origin: (_, callback) => callback(null, true),
-      }),
+      })
     );
+
     this.express.use(morgan('dev'));
+    this.express.use(helmet());
     this.express.use(express.json());
     this.express.use(express.urlencoded({ extended: false }));
-    this.express.use(helmet());
   }
 
   private setRoutes(): void {
-    logger('test');
+    this.express.use('/api', routes);
+    this.express.use('*', APIMiddleware.notFound);
   }
 
   private setHealthChecker(): void {

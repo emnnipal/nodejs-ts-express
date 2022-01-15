@@ -1,9 +1,7 @@
 import app from './App';
-import { logger } from './utils/logger';
-
-const PORT = 3000;
-const APP = 'development';
+import { APP, PORT } from './shared/configs';
+import { logger } from './shared/utils/Logger';
 
 app.listen(PORT, () => {
-  logger('APP', `Listening on PORT: ${PORT}, APP: ${APP}`);
+  logger.info('APP', `Listening on PORT: ${PORT}, APP: ${APP}`);
 });
