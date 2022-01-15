@@ -7,6 +7,9 @@ export const validate = (method: Methods) => {
     case Methods.UserCreate: {
       return users.createValidations;
     }
+    case Methods.UserGet: {
+      return users.getValidations;
+    }
     default: {
       throw Error('Missing validation schema');
     }

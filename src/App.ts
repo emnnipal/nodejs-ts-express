@@ -35,7 +35,7 @@ class App {
   }
 
   private setHealthChecker(): void {
-    this.express.use('/health', (_, res) => res.status(200).send('OK!'));
+    this.express.use('/health', APIMiddleware.healthCheck);
   }
 }
 

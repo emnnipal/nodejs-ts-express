@@ -8,6 +8,10 @@ class APIMiddleware {
     res.json(HttpResponses.notFound);
     res.end();
   }
+
+  static healthCheck(_: Request, res: Response): void {
+    res.status(200).send('OK!');
+  }
 }
 
 export default APIMiddleware;
