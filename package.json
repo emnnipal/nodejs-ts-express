@@ -7,7 +7,7 @@
     "node",
     "api"
   ],
-  "author": "Emmanuel G. Nipal Jr.",
+  "author": "Emmanuel Nipal <emnnipal@gmail.com>",
   "license": "ISC",
   "scripts": {
     "test": "jest",
