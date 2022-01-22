@@ -1,5 +1,5 @@
 import app from './App';
-import { APP, PORT } from './shared/configs';
+import { APP, PORT } from './shared/configs/app';
 import { logger } from './shared/utils/Logger';
 
 app.listen(PORT, () => {

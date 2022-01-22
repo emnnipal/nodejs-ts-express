@@ -1,0 +1,22 @@
+# how to setup https://hoohoo.top/blog/20210525232300-github-action-auto-ssh-to-host-and-excute-script/\
+
+name: 'Manual Deploy'
+on: workflow_dispatch
+
+jobs:
+  manual-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the current branch name
+        shell: bash
+        run: echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"
+        id: extract_branch
+
+      - name: Deploy ${{ steps.extract_branch.outputs.branch }} branch to dev
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY_ED25519 }}
+          port: ${{ secrets.PORT }}
+          script: sh /home/ubuntu/apps/deployments/deploy.sh repository-name ${{ steps.extract_branch.outputs.branch }}

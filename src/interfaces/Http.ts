@@ -6,6 +6,6 @@ export interface IHttpResponse<Results = unknown> {
 }
 
 export enum Methods {
-  UserGet = 'user.get',
-  UserCreate = 'user.create',
+  UserGet = `users.get`,
+  UserCreate = 'users.create',
 }

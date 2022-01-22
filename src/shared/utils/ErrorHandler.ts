@@ -31,10 +31,14 @@ class ErrorHandler<T = unknown> extends Error {
         ...errResponse,
         ...overrideResponse,
       };
-      logger.info('Error', response, {
-        user: {},
-        stack: err.stack?.split(/\n/).slice(1, 4) || [],
-      });
+      logger.info(
+        'Error',
+        {
+          user: {},
+          endpoint: req.originalUrl,
+        },
+        response
+      );
       res.status(err.statusCode).json(response);
       return;
     }

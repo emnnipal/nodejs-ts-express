@@ -13,7 +13,7 @@ jest.mock('morgan', () =>
 describe('App', () => {
   describe('common routes', () => {
     it('should be able to run health route', async () => {
-      const { text } = await supertest(App).get('/health').expect(200);
+      const { text } = await supertest(App).get('/api/health').expect(200);
       expect(text).toBe('OK!');
     });
 

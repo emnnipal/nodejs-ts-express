@@ -1,15 +1,12 @@
-import * as users from './Users';
+import UsersValidations from './Users';
 
 import { Methods } from '../../interfaces/Http';
 
 export const validate = (method: Methods) => {
-  switch (method) {
-    case Methods.UserCreate: {
-      return users.createValidations;
-    }
-    case Methods.UserGet: {
-      return users.getValidations;
-    }
+  const [entity, action] = method.split('.');
+  switch (entity) {
+    case 'users':
+      return UsersValidations[action];
     default: {
       throw Error('Missing validation schema');
     }

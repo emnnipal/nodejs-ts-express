@@ -21,12 +21,11 @@ describe('ErrorHandler', () => {
   } as unknown as Response;
 
   const mockRequest = {
+    originalUrl: '/users',
     body: {
       value: 'test',
     },
   } as Request;
-
-  const expectedStack = expect.toBeArrayOfSize(3);
 
   describe('given no override value', () => {
     it.each(Object.values(HttpResponseType))(`should throw without crashing - %s`, (value) => {
@@ -41,10 +40,14 @@ describe('ErrorHandler', () => {
         overrideResponse: null,
       });
 
-      expect(loggerInfoSpy).toHaveBeenCalledWith(expect.any(String), mockJSONResponse, {
-        user: expect.any(Object),
-        stack: expectedStack,
-      });
+      expect(loggerInfoSpy).toHaveBeenCalledWith(
+        expect.any(String),
+        {
+          user: expect.any(Object),
+          endpoint: mockRequest.originalUrl,
+        },
+        mockJSONResponse
+      );
 
       expect(mockStatus).toHaveBeenCalledWith(error.statusCode);
       expect(mockJSON).toHaveBeenCalledWith(mockJSONResponse);
@@ -69,10 +72,14 @@ describe('ErrorHandler', () => {
         overrideResponse: null,
       });
 
-      expect(loggerInfoSpy).toHaveBeenCalledWith(expect.any(String), mockJSONResponse, {
-        user: expect.any(Object),
-        stack: expectedStack,
-      });
+      expect(loggerInfoSpy).toHaveBeenCalledWith(
+        expect.any(String),
+        {
+          user: expect.any(Object),
+          endpoint: mockRequest.originalUrl,
+        },
+        mockJSONResponse
+      );
 
       expect(mockStatus).toHaveBeenCalledWith(error.statusCode);
       expect(mockJSON).toHaveBeenCalledWith(mockJSONResponse);
@@ -96,10 +103,14 @@ describe('ErrorHandler', () => {
         overrideResponse: mockError,
       });
 
-      expect(loggerInfoSpy).toHaveBeenCalledWith(expect.any(String), mockJSONResponse, {
-        user: expect.any(Object),
-        stack: expectedStack,
-      });
+      expect(loggerInfoSpy).toHaveBeenCalledWith(
+        expect.any(String),
+        {
+          user: expect.any(Object),
+          endpoint: mockRequest.originalUrl,
+        },
+        mockJSONResponse
+      );
 
       expect(mockStatus).toHaveBeenCalledWith(error.statusCode);
       expect(mockJSON).toHaveBeenCalledWith(mockJSONResponse);
@@ -123,18 +134,6 @@ describe('ErrorHandler', () => {
       const errResponse = HttpResponses[HttpResponseType.ServerError];
       expect(mockStatus).toHaveBeenCalledWith(errResponse.statusCode);
       expect(mockJSON).toHaveBeenCalledWith(errResponse);
-    });
-
-    it('should able to log untracable error', () => {
-      const mockError = new ErrorHandler(HttpResponseType.BadRequest);
-
-      delete mockError.stack;
-      ErrorHandler.processError(mockError, mockRequest, mockResponse);
-
-      expect(loggerInfoSpy).toHaveBeenCalledWith(expect.any(String), expect.any(Object), {
-        user: expect.any(Object),
-        stack: expect.any(Array),
-      });
     });
 
     it('should able to log unknown requests', () => {
