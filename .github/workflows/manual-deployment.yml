@@ -1,4 +1,9 @@
-# how to setup https://hoohoo.top/blog/20210525232300-github-action-auto-ssh-to-host-and-excute-script/\
+# how to setup https://hoohoo.top/blog/20210525232300-github-action-auto-ssh-to-host-and-excute-script/
+# 1. generate keygen in server/local machine
+#    ssh-keygen -f ~/.ssh/github_actions/your_repo -t ed25519 -b 4096 -C "youremail@example.com"
+#
+# 2. Copy our public key to the remote server’s authorize
+#    echo "your public keygen content" >> .ssh/authorized_keys
 
 name: 'Manual Deploy'
 on: workflow_dispatch
