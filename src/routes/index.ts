@@ -1,4 +1,4 @@
-import { usersRoute } from './Users';
+import usersRoute from './Users';
 
 import AuthMiddleware from '../shared/middlewares/Auth';
 

@@ -3,7 +3,7 @@
 #    ssh-keygen -f ~/.ssh/github_actions/your_repo -t ed25519 -b 4096 -C "youremail@example.com"
 #
 # 2. Copy our public key to the remote server’s authorize
-#    echo "your public keygen content" >> .ssh/authorized_keys
+#    cat your_repo.pub >> .ssh/authorized_keys
 
 name: 'Manual Deploy'
 on: workflow_dispatch
