@@ -1,0 +1,13 @@
+name: 'Manual Deploy to Staging'
+on: workflow_dispatch
+
+jobs:
+  manual-deploy-staging:
+    uses: ./.github/workflows/deploy-workflow.yml
+    with:
+      environment: STAGING
+    secrets:
+      ssh_host: ${{ secrets.STAGING_HOST }}
+      ssh_user: ${{ secrets.USERNAME }}
+      ssh_key_ed25519: ${{ secrets.STAGING_KEY_ED25519 }}
+      ssh_port: ${{ secrets.PORT }}
