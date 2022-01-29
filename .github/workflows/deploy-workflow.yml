@@ -42,7 +42,7 @@ jobs:
       #     username: ${{ secrets.ssh_user }}
       #     key: ${{ secrets.ssh_key_ed25519 }}
       #     port: ${{ secrets.ssh_port }}
-      #     script: sh /home/ubuntu/apps/deployments/deploy.sh relloe-platform ${{ steps.extract_branch.outputs.branch }}
+      #     script: sh /home/ubuntu/apps/deployments/deploy.sh boilerplate-ts-nodejs ${{ steps.extract_branch.outputs.branch }}
 
       #############################################################################
 
