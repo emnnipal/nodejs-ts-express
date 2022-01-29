@@ -32,7 +32,7 @@ jobs:
         id: extract_branch
 
       - name: Deployment script below
-      - run: echo "add your script here to deploy ${{ steps.extract_branch.outputs.branch }} branch"
+        run: echo "add your script here to deploy ${{ steps.extract_branch.outputs.branch }} branch"
 
       # If you will build your app in server
       # - name: Deploy ${{ steps.extract_branch.outputs.branch }} branch to ${{ inputs.environment }}
