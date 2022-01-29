@@ -44,7 +44,7 @@ jobs:
       #     port: ${{ secrets.ssh_port }}
       #     script: sh /home/ubuntu/apps/deployments/deploy.sh relloe-platform ${{ steps.extract_branch.outputs.branch }}
 
-      #################################################################################
+      ###############################################################################
 
       # If you will build your app in github actions
       # - uses: actions/checkout@v2
