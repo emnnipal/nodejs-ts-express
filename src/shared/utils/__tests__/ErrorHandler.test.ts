@@ -137,5 +137,21 @@ describe('ErrorHandler', () => {
       expect(mockStatus).toHaveBeenCalledWith(errResponse.statusCode);
       expect(mockJSON).toHaveBeenCalledWith(errResponse);
     });
+
+    it('should able to log unknown requests', () => {
+      const mockError = new Error();
+      const mockData = undefined;
+
+      ErrorHandler.processError(mockError, mockData as unknown as Request, mockResponse);
+
+      expect(errLoggerSpy).toHaveBeenCalledWith(mockError);
+
+      expect(logger.error).toHaveBeenCalledWith(
+        'Unhandled Error',
+        expect.any(Object),
+        expect.any(Object),
+        mockError
+      );
+    });
   });
 });
