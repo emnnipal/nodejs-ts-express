@@ -1,16 +1,16 @@
 import 'jest-extended';
 import { HttpResponses, HttpResponseType } from '../../constants/Http';
 import ErrorHandler from '../ErrorHandler';
-import { logger } from '../Logger';
+import logger from '../Logger';
 
 import { Request, Response } from 'express';
 
 const transformErrToJSON = (error: Error) => JSON.parse(JSON.stringify(error));
 
-describe('ErrorHandler', () => {
-  const loggerInfoSpy = jest.spyOn(logger, 'info').mockImplementation();
-  const loggerErrorSpy = jest.spyOn(logger, 'error').mockImplementation();
+jest.mock('../Logger');
 
+describe('ErrorHandler', () => {
+  const errLoggerSpy = jest.spyOn(console, 'error').mockImplementation();
   const mockJSON = jest.fn();
   const mockStatus = jest.fn().mockReturnValue({
     json: mockJSON,
@@ -40,11 +40,11 @@ describe('ErrorHandler', () => {
         overrideResponse: null,
       });
 
-      expect(loggerInfoSpy).toHaveBeenCalledWith(
-        expect.any(String),
+      expect(logger.warn).toHaveBeenCalledWith(
+        mockJSONResponse.message,
         {
-          user: expect.any(Object),
           endpoint: mockRequest.originalUrl,
+          user: expect.any(Object),
         },
         mockJSONResponse
       );
@@ -72,11 +72,11 @@ describe('ErrorHandler', () => {
         overrideResponse: null,
       });
 
-      expect(loggerInfoSpy).toHaveBeenCalledWith(
-        expect.any(String),
+      expect(logger.warn).toHaveBeenCalledWith(
+        mockError,
         {
-          user: expect.any(Object),
           endpoint: mockRequest.originalUrl,
+          user: expect.any(Object),
         },
         mockJSONResponse
       );
@@ -103,11 +103,11 @@ describe('ErrorHandler', () => {
         overrideResponse: mockError,
       });
 
-      expect(loggerInfoSpy).toHaveBeenCalledWith(
-        expect.any(String),
+      expect(logger.warn).toHaveBeenCalledWith(
+        mockJSONResponse.message,
         {
-          user: expect.any(Object),
           endpoint: mockRequest.originalUrl,
+          user: expect.any(Object),
         },
         mockJSONResponse
       );
@@ -122,32 +122,20 @@ describe('ErrorHandler', () => {
       const mockError = new Error('test');
       ErrorHandler.processError(mockError, mockRequest, mockResponse);
 
-      expect(loggerErrorSpy).toHaveBeenCalledWith(
-        expect.any(String),
+      expect(logger.error).toHaveBeenCalledWith(
+        'Unhandled Error',
         {
+          endpoint: mockRequest.originalUrl,
           user: expect.any(Object),
         },
         mockRequest.body,
         mockError
       );
+      expect(errLoggerSpy).toHaveBeenCalledWith(mockError);
 
       const errResponse = HttpResponses[HttpResponseType.ServerError];
       expect(mockStatus).toHaveBeenCalledWith(errResponse.statusCode);
       expect(mockJSON).toHaveBeenCalledWith(errResponse);
-    });
-
-    it('should able to log unknown requests', () => {
-      const mockError = new Error();
-      const mockData = undefined;
-
-      ErrorHandler.processError(mockError, mockData as unknown as Request, mockResponse);
-
-      expect(loggerErrorSpy).toHaveBeenCalledWith(
-        expect.any(String),
-        expect.any(Object),
-        expect.any(Object),
-        mockError
-      );
     });
   });
 });

@@ -1,4 +1,4 @@
-import { logger } from './Logger';
+import logger from './Logger';
 
 import { HttpResponseType, HttpResponses } from '../constants/Http';
 
@@ -31,11 +31,11 @@ class ErrorHandler<T = unknown> extends Error {
         ...errResponse,
         ...overrideResponse,
       };
-      logger.info(
-        'Error',
+      logger.warn(
+        err.message,
         {
-          user: {},
           endpoint: req.originalUrl,
+          user: {},
         },
         response
       );
@@ -44,7 +44,9 @@ class ErrorHandler<T = unknown> extends Error {
     }
 
     const errResponse = HttpResponses[HttpResponseType.ServerError];
-    logger.error('Unhandled error', { user: {} }, req?.body || {}, err);
+    logger.error('Unhandled Error', { endpoint: req?.originalUrl, user: {} }, req?.body || {}, err);
+    // eslint-disable-next-line no-console
+    console.error(err);
     res.status(errResponse.statusCode).json(errResponse);
   }
 }
