@@ -1,15 +1,15 @@
 name: 'Unit tests & linter'
 on:
   push:
-    branches: [main]
+    branches: [main, develop]
   pull_request:
-    branches: [main]
+    branches: [main, develop]
 
 jobs:
   validations:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v1
         with:
           ref: ${{ github.ref }}
 
@@ -24,4 +24,4 @@ jobs:
         run: yarn lint
 
       - name: Run tests
-        run: yarn test --maxWorkers=4 --no-color --coverage=false --changedSince=${{ github.event.pull_request.head.sha }}
+        run: yarn test --maxWorkers=4 --no-color --coverage=false --changedSince=origin/main
