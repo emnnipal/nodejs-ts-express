@@ -5,7 +5,8 @@
   "main": "index.js",
   "keywords": [
     "node",
-    "api"
+    "api",
+    "express"
   ],
   "author": "Emmanuel Nipal <emnnipal@gmail.com>",
   "license": "ISC",
