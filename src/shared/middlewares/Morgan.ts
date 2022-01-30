@@ -1,10 +1,10 @@
 import { NODE_ENV } from '../configs/app';
-import Logger from '../utils/Logger';
+import logger from '../utils/Logger';
 
 import morgan, { StreamOptions } from 'morgan';
 
 const stream: StreamOptions = {
-  write: (message) => Logger.http(message),
+  write: (message) => logger.http(message),
 };
 
 const skip = () => NODE_ENV !== 'development';
