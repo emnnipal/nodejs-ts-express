@@ -19,18 +19,7 @@
     "experimentalDecorators": true,
     "resolveJsonModule": true
   },
-  "exclude": [
-    "node_modules",
-    "build",
-    "commitlint.config.js",
-    "src/fixtures/**/*",
-    "jest.config.ts",
-    "babel.config.js",
-    "coverage",
-    "src/**/*.test.ts",
-    "__snapshots__",
-    "jest.setup.ts"
-  ],
+  "exclude": ["src/**/*.test.ts"],
   "include": ["src/**/*.ts"],
   "files": ["global.d.ts"]
 }
