@@ -1,14 +1,28 @@
 import UsersValidations from './Users';
 
-import { Methods } from '../../interfaces/Http';
+import { IMethod } from '../interfaces/Auth';
 
-export const validate = (method: Methods) => {
-  const [entity, action] = method.split('.');
-  switch (entity) {
-    case 'users':
-      return UsersValidations[action];
-    default: {
-      throw Error('Missing validation schema');
-    }
+import { ValidationChain } from 'express-validator';
+import get from 'lodash/get';
+
+export const Validators = {
+  v1: {
+    users: UsersValidations,
+  },
+};
+
+export const validate = (method: IMethod, originalUrl: string) => {
+  const {
+    1: apiVersion,
+    2: entity,
+    3: action = 'default',
+  } = originalUrl.split('/').filter((item) => item);
+
+  const validator = get(Validators, [apiVersion, entity, method, action]);
+
+  if (!validator) {
+    throw Error('Missing validation schema');
   }
+
+  return validator as ValidationChain[];
 };

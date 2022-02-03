@@ -1,5 +1,5 @@
-import { Methods } from '../../interfaces/Http';
 import { HttpResponseType } from '../constants/Http';
+import { IMethod } from '../interfaces/Auth';
 import ErrorHandler from '../utils/ErrorHandler';
 import { validate } from '../validations';
 
@@ -15,10 +15,10 @@ class AuthMiddleware {
     }
   }
 
-  static verifyRequest(method: Methods) {
+  static verifyRequest() {
     return async (req: Request, res: Response, next: NextFunction) => {
       try {
-        const validations = validate(method);
+        const validations = validate(req.method as IMethod, `${req.baseUrl}${req.route.path}`);
 
         await Promise.all(validations.map((validation) => validation.run(req)));
 

@@ -1,12 +1,19 @@
-import { body, query, ValidationChain } from 'express-validator';
+import { IValidator } from '../interfaces/Auth';
+import { RequireAtLeastOne } from '../interfaces/Common';
 
-const UsersValidations: { [key: string]: ValidationChain[] } = {
-  get: [query('id').exists().withMessage('Missing user id')],
-  create: [
-    body('email').exists().withMessage('email is required'),
-    body('name').exists(),
-    body('details.address').exists(),
-  ],
+import { body, query } from 'express-validator';
+
+const UsersValidations: RequireAtLeastOne<IValidator> = {
+  POST: {
+    default: [
+      body('email').exists().withMessage('email is required'),
+      body('name').exists(),
+      body('details.address').exists(),
+    ],
+  },
+  GET: {
+    default: [query('id').exists().withMessage('Missing user id')],
+  },
 };
 
 export default UsersValidations;

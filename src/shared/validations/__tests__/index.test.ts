@@ -1,10 +1,10 @@
-import { Methods } from '../../../interfaces/Http';
+import { IMethod } from '../../interfaces/Auth';
 import { validate } from '../index';
 
 describe('Validations', () => {
   describe('given invalid method', () => {
     it('should throw an error', () => {
-      expect(() => validate('test' as Methods)).toThrow('Missing validation schema');
+      expect(() => validate('test' as IMethod, 'more test')).toThrow('Missing validation schema');
     });
   });
 });

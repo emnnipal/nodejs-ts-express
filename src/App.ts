@@ -6,37 +6,20 @@ import cors from 'cors';
 import express, { Application } from 'express';
 import helmet from 'helmet';
 
-class App {
-  public express: Application;
+function createServer() {
+  const app: Application = express();
 
-  constructor() {
-    this.express = express();
-    this.setHealthChecker();
-    this.setMiddlewares();
-    this.setRoutes();
-  }
+  app.use(cors());
+  app.use(helmet());
+  app.use(morganMiddleware);
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: false }));
 
-  private setMiddlewares(): void {
-    this.express.use(
-      cors({
-        origin: (_, callback) => callback(null, true),
-      })
-    );
+  app.use('/api', routes);
+  app.use('/api/health', APIMiddleware.healthCheck);
+  app.use('*', APIMiddleware.notFound);
 
-    this.express.use(morganMiddleware);
-    this.express.use(helmet());
-    this.express.use(express.json());
-    this.express.use(express.urlencoded({ extended: false }));
-  }
-
-  private setRoutes(): void {
-    this.express.use('/api', routes);
-    this.express.use('*', APIMiddleware.notFound);
-  }
-
-  private setHealthChecker(): void {
-    this.express.use('/api/health', APIMiddleware.healthCheck);
-  }
+  return app;
 }
 
-export default new App().express;
+export default createServer;

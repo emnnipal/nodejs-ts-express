@@ -1,9 +1,7 @@
-import usersRoute from './Users';
-
-import AuthMiddleware from '../shared/middlewares/Auth';
+import v1Routes from './v1';
 
 import { Router } from 'express';
 
 export const routes: Router = Router();
 
-routes.use('/users', AuthMiddleware.verifyToken, usersRoute);
+routes.use('/v1', v1Routes);

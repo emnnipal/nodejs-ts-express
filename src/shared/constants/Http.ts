@@ -1,4 +1,4 @@
-import { IHttpResponse } from '../../interfaces/Http';
+import { IHttpResponse } from '../interfaces/Http';
 
 export enum HttpResponseType {
   ServerError = 'serverError',
