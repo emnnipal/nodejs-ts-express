@@ -21,11 +21,20 @@ describe('ErrorHandler', () => {
   } as unknown as Response;
 
   const mockRequest = {
+    method: 'POST',
     originalUrl: '/users',
     body: {
       value: 'test',
     },
-  } as Request;
+    user: { id: 'test' },
+  } as Request & { user: { id: string } };
+
+  const mockEndpoint = `${mockRequest.method} ${mockRequest.originalUrl}`;
+  const mockErrorDetails = {
+    errorId: expect.any(String),
+    endpoint: mockEndpoint,
+    user: mockRequest.user,
+  };
 
   describe('given no override value', () => {
     it.each(Object.values(HttpResponseType))(`should throw without crashing - %s`, (value) => {
@@ -42,10 +51,7 @@ describe('ErrorHandler', () => {
 
       expect(logger.warn).toHaveBeenCalledWith(
         mockJSONResponse.message,
-        {
-          endpoint: mockRequest.originalUrl,
-          user: expect.any(Object),
-        },
+        mockErrorDetails,
         mockJSONResponse
       );
 
@@ -72,14 +78,7 @@ describe('ErrorHandler', () => {
         overrideResponse: null,
       });
 
-      expect(logger.warn).toHaveBeenCalledWith(
-        mockError,
-        {
-          endpoint: mockRequest.originalUrl,
-          user: expect.any(Object),
-        },
-        mockJSONResponse
-      );
+      expect(logger.warn).toHaveBeenCalledWith(mockError, mockErrorDetails, mockJSONResponse);
 
       expect(mockStatus).toHaveBeenCalledWith(error.statusCode);
       expect(mockJSON).toHaveBeenCalledWith(mockJSONResponse);
@@ -105,10 +104,7 @@ describe('ErrorHandler', () => {
 
       expect(logger.warn).toHaveBeenCalledWith(
         mockJSONResponse.message,
-        {
-          endpoint: mockRequest.originalUrl,
-          user: expect.any(Object),
-        },
+        mockErrorDetails,
         mockJSONResponse
       );
 
@@ -124,14 +120,11 @@ describe('ErrorHandler', () => {
 
       expect(logger.error).toHaveBeenCalledWith(
         'Unhandled Error',
-        {
-          endpoint: mockRequest.originalUrl,
-          user: expect.any(Object),
-        },
+        mockErrorDetails,
         mockRequest.body,
         mockError
       );
-      expect(errLoggerSpy).toHaveBeenCalledWith(mockError);
+      expect(errLoggerSpy).toHaveBeenCalledWith(expect.any(String), mockError);
 
       const errResponse = HttpResponses[HttpResponseType.ServerError];
       expect(mockStatus).toHaveBeenCalledWith(errResponse.statusCode);
@@ -144,11 +137,15 @@ describe('ErrorHandler', () => {
 
       ErrorHandler.processError(mockError, mockData as unknown as Request, mockResponse);
 
-      expect(errLoggerSpy).toHaveBeenCalledWith(mockError);
+      expect(errLoggerSpy).toHaveBeenCalledWith(expect.any(String), mockError);
 
       expect(logger.error).toHaveBeenCalledWith(
         'Unhandled Error',
-        expect.any(Object),
+        {
+          ...mockErrorDetails,
+          endpoint: expect.any(String),
+          user: expect.any(Object),
+        },
         expect.any(Object),
         mockError
       );

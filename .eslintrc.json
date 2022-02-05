@@ -71,6 +71,10 @@
           "regex": "^I[A-Z]",
           "match": true
         }
+      },
+      {
+        "selector": ["typeAlias", "enum", "class", "typeParameter"],
+        "format": ["PascalCase"]
       }
     ],
     "@typescript-eslint/no-unsafe-member-access": "off",

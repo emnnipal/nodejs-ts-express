@@ -4,6 +4,8 @@ import { HttpResponseType, HttpResponses } from '../constants/Http';
 
 import { Request, Response } from 'express';
 
+import { randomUUID } from 'crypto';
+
 class ErrorHandler<T = unknown> extends Error {
   public message: string;
 
@@ -25,6 +27,10 @@ class ErrorHandler<T = unknown> extends Error {
   }
 
   static processError<Err>(err: ErrorHandler<Err> | Error, req: Request, res: Response) {
+    const errorId = randomUUID();
+    const user = req?.user || {};
+    const endpoint = `${req?.method} ${req?.originalUrl}`;
+
     if (err instanceof ErrorHandler) {
       const { overrideResponse, ...errResponse } = err;
       const response = {
@@ -34,8 +40,9 @@ class ErrorHandler<T = unknown> extends Error {
       logger.warn(
         err.message,
         {
-          endpoint: req.originalUrl,
-          user: {},
+          errorId,
+          endpoint,
+          user,
         },
         response
       );
@@ -44,9 +51,9 @@ class ErrorHandler<T = unknown> extends Error {
     }
 
     const errResponse = HttpResponses[HttpResponseType.ServerError];
-    logger.error('Unhandled Error', { endpoint: req?.originalUrl, user: {} }, req?.body || {}, err);
+    logger.error('Unhandled Error', { errorId, endpoint, user }, req?.body || {}, err);
     // eslint-disable-next-line no-console
-    console.error(err);
+    console.error(errorId, err);
     res.status(errResponse.statusCode).json(errResponse);
   }
 }
