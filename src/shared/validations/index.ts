@@ -1,6 +1,6 @@
 import UsersValidations from './Users';
 
-import { IMethod } from '../interfaces/Auth';
+import { IMethods } from '../interfaces/Auth';
 
 import { ValidationChain } from 'express-validator';
 import get from 'lodash/get';
@@ -11,7 +11,7 @@ export const Validators = {
   },
 };
 
-export const validate = (method: IMethod, originalUrl: string) => {
+export const validate = (method: IMethods, originalUrl: string) => {
   const {
     1: apiVersion,
     2: entity,
