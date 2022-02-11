@@ -12,6 +12,9 @@ on:
       environment:
         required: true
         type: string
+      branch:
+        required: true
+        type: string
     secrets:
       ssh_host:
         required: true
@@ -26,23 +29,24 @@ jobs:
   deploy-app:
     runs-on: ubuntu-latest
     steps:
-      - name: Get the current branch name
-        shell: bash
-        run: echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"
-        id: extract_branch
-
       - name: Deployment script below
-        run: echo "add your script here to deploy ${{ steps.extract_branch.outputs.branch }} branch"
+        run: echo "add your script here to deploy ${{ inputs.branch }} branch"
+
+      # To get current branch. Not applicable for reusable workflows
+      # - name: Get the current branch name
+      #   shell: bash
+      #   run: echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"
+      #   id: extract_branch
 
       # If you will build your app in server
-      # - name: Deploy ${{ steps.extract_branch.outputs.branch }} branch to ${{ inputs.environment }}
+      # - name: Deploy ${{ inputs.branch }} branch to ${{ inputs.environment }}
       #   uses: appleboy/ssh-action@master
       #   with:
       #     host: ${{ secrets.ssh_host }}
       #     username: ${{ secrets.ssh_user }}
       #     key: ${{ secrets.ssh_key_ed25519 }}
       #     port: ${{ secrets.ssh_port }}
-      #     script: sh /home/ubuntu/apps/deployments/deploy.sh boilerplate-ts-nodejs ${{ steps.extract_branch.outputs.branch }}
+      #     script: sh /home/ubuntu/apps/deployments/deploy.sh boilerplate-ts-nodejs ${{ inputs.branch }}
 
       #############################################################################
 
@@ -61,5 +65,5 @@ jobs:
       # - name: Set node environment variables
       #   run: echo ${{ secrets.DEV_APP_ENV }} | base64 --decode --ignore-garbage > .env
 
-      # - name: Build ${{ steps.extract_branch.outputs.branch }} branch
+      # - name: Build ${{ inputs.branch }} branch
       #   run: yarn build

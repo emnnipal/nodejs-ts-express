@@ -6,6 +6,7 @@ jobs:
     uses: ./.github/workflows/deploy-workflow.yml
     with:
       environment: STAGING
+      branch: ${{ github.ref }}
     secrets:
       ssh_host: ${{ secrets.STAGING_HOST }}
       ssh_user: ${{ secrets.USERNAME }}

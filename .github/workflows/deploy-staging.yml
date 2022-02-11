@@ -8,6 +8,7 @@ jobs:
     uses: emnnipal/boilerplate-ts-nodejs/.github/workflows/deploy-workflow.yml@main
     with:
       environment: STAGING
+      branch: ${{ github.ref }}
     secrets:
       ssh_host: ${{ secrets.STAGING_HOST }}
       ssh_user: ${{ secrets.USERNAME }}

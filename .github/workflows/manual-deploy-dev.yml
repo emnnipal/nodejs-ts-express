@@ -6,6 +6,7 @@ jobs:
     uses: ./.github/workflows/deploy-workflow.yml
     with:
       environment: DEV
+      branch: ${{ github.ref }}
     secrets:
       ssh_host: ${{ secrets.HOST }}
       ssh_user: ${{ secrets.USERNAME }}
