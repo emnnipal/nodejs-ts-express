@@ -5,7 +5,7 @@ on:
 
 jobs:
   deploy-staging:
-    uses: emnnipal/boilerplate-ts-nodejs/.github/workflows/deploy-workflow.yml@main
+    uses: ./.github/workflows/deploy-workflow.yml
     with:
       environment: STAGING
       branch: ${{ github.ref }}
