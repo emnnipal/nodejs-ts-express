@@ -1,6 +1,6 @@
 {
   "name": "boilerplate-ts-nodejs",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "Boilerplate for node js with typescript.",
   "main": "index.js",
   "keywords": [
