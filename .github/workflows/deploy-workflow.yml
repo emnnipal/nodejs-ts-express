@@ -29,41 +29,32 @@ jobs:
   deploy-app:
     runs-on: ubuntu-latest
     steps:
-      - name: Deployment script below
-        run: echo "add your script here to deploy ${{ inputs.branch }} branch"
+      - name: Get the current branch name
+        shell: bash
+        run: echo "::set-output name=branch::${INPUT_BRANCH#refs/heads/}"
+        id: extract_branch
+        env:
+          INPUT_BRANCH: ${{ inputs.branch }}
 
-      # To get current branch. Not applicable for reusable workflows
+      - name: Deployment script below
+        run: |
+          echo "add your script here to deploy ${{ inputs.branch }} branch"
+          echo "extracted branch ${{ steps.extract_branch.outputs.branch }}"
+
+      # To get current branch from github.ref
+      # github.ref is not applicable for reusable workflows
+      # Use the extracted branch from inputs.branch instead
       # - name: Get the current branch name
       #   shell: bash
       #   run: echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"
       #   id: extract_branch
 
       # If you will build your app in server
-      # - name: Deploy ${{ inputs.branch }} branch to ${{ inputs.environment }}
+      # - name: Deploy ${{ steps.extract_branch.outputs.branch }} branch to ${{ inputs.environment }}
       #   uses: appleboy/ssh-action@master
       #   with:
       #     host: ${{ secrets.ssh_host }}
       #     username: ${{ secrets.ssh_user }}
       #     key: ${{ secrets.ssh_key_ed25519 }}
       #     port: ${{ secrets.ssh_port }}
-      #     script: sh /home/ubuntu/apps/deployments/deploy.sh boilerplate-ts-nodejs ${{ inputs.branch }}
-
-      #############################################################################
-
-      # If you will build your app in github actions
-      # - uses: actions/checkout@v2
-      #   with:
-      #     ref: ${{ github.ref }}
-
-      # - uses: actions/setup-node@v2
-      #   with:
-      #     node-version: 16.13.0
-      #     cache: 'yarn'
-
-      # - run: yarn install --immutable --immutable-cache
-
-      # - name: Set node environment variables
-      #   run: echo ${{ secrets.DEV_APP_ENV }} | base64 --decode --ignore-garbage > .env
-
-      # - name: Build ${{ inputs.branch }} branch
-      #   run: yarn build
+      #     script: sh /home/ubuntu/apps/deployments/deploy.sh boilerplate-ts-nodejs ${{ steps.extract_branch.outputs.branch }}
