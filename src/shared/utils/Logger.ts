@@ -13,7 +13,7 @@ const levels = {
 const level = () => {
   const env = process.env.NODE_ENV || 'development';
   const isDevelopment = env === 'development';
-  return isDevelopment ? 'debug' : (LOGGER_LEVEL as winston.level);
+  return isDevelopment ? 'debug' : LOGGER_LEVEL;
 };
 
 const colors = {

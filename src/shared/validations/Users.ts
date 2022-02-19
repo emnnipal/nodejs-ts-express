@@ -3,6 +3,7 @@ import { RequireAtLeastOne } from '../interfaces/Common';
 
 import { body, query } from 'express-validator';
 
+// Change to Joi JS
 const UsersValidations: RequireAtLeastOne<IValidator> = {
   POST: {
     default: [

@@ -1,5 +1,5 @@
 import { routes } from './routes';
-import APIMiddleware from './shared/middlewares/Api';
+import AppMiddleware from './shared/middlewares/App';
 import morganMiddleware from './shared/middlewares/Morgan';
 
 import cors from 'cors';
@@ -13,11 +13,12 @@ function createServer() {
   app.use(helmet());
   app.use(morganMiddleware);
   app.use(express.json());
+  app.use(AppMiddleware.syntaxError);
   app.use(express.urlencoded({ extended: false }));
 
   app.use('/api', routes);
-  app.use('/api/health', APIMiddleware.healthCheck);
-  app.use('*', APIMiddleware.notFound);
+  app.use('/api/health', AppMiddleware.healthCheck);
+  app.use('*', AppMiddleware.notFound);
 
   return app;
 }

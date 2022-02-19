@@ -7,3 +7,4 @@ logs/
 .eslintcache
 .vscode
 *-error.log
+*-debug.log
