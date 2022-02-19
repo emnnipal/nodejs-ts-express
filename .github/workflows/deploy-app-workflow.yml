@@ -1,0 +1,60 @@
+# how to setup https://hoohoo.top/blog/20210525232300-github-action-auto-ssh-to-host-and-excute-script/
+# 1. generate keygen in server/local machine
+#    ssh-keygen -f ~/.ssh/github_actions/your_repo -t ed25519 -b 4096 -C "youremail@example.com"
+#
+# 2. Copy our public key to the remote server’s authorize
+#    cat your_repo.pub >> .ssh/authorized_keys
+
+name: 'Deploy workflow'
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+      branch:
+        required: true
+        type: string
+    secrets:
+      ssh_host:
+        required: true
+      ssh_user:
+        required: true
+      ssh_key_ed25519:
+        required: true
+      ssh_port:
+        required: true
+
+jobs:
+  deploy-app:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the current branch name
+        shell: bash
+        run: echo "::set-output name=branch::${INPUT_BRANCH#refs/heads/}"
+        id: extract_branch
+        env:
+          INPUT_BRANCH: ${{ inputs.branch }}
+
+      - name: Deployment script below
+        run: |
+          echo "add your script here to deploy ${{ inputs.branch }} branch"
+          echo "extracted branch ${{ steps.extract_branch.outputs.branch }}"
+
+      # To get current branch from github.ref
+      # github.ref is not applicable for reusable workflows
+      # Use the extracted branch from inputs.branch instead
+      # - name: Get the current branch name
+      #   shell: bash
+      #   run: echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"
+      #   id: extract_branch
+
+      # If you will build your app in server
+      # - name: Deploy ${{ steps.extract_branch.outputs.branch }} branch to ${{ inputs.environment }}
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ secrets.ssh_host }}
+      #     username: ${{ secrets.ssh_user }}
+      #     key: ${{ secrets.ssh_key_ed25519 }}
+      #     port: ${{ secrets.ssh_port }}
+      #     script: sh /home/ubuntu/apps/deployments/deploy.sh boilerplate-ts-nodejs ${{ steps.extract_branch.outputs.branch }}

@@ -1,60 +1,94 @@
-# how to setup https://hoohoo.top/blog/20210525232300-github-action-auto-ssh-to-host-and-excute-script/
-# 1. generate keygen in server/local machine
-#    ssh-keygen -f ~/.ssh/github_actions/your_repo -t ed25519 -b 4096 -C "youremail@example.com"
-#
-# 2. Copy our public key to the remote server’s authorize
-#    cat your_repo.pub >> .ssh/authorized_keys
-
-name: 'Deploy workflow'
+name: 'Deploy'
 on:
-  workflow_call:
-    inputs:
-      environment:
-        required: true
-        type: string
-      branch:
-        required: true
-        type: string
-    secrets:
-      ssh_host:
-        required: true
-      ssh_user:
-        required: true
-      ssh_key_ed25519:
-        required: true
-      ssh_port:
-        required: true
+  push:
+    branches: [main, develop]
 
 jobs:
-  deploy-app:
+  validations:
+    name: Lint and unit test
     runs-on: ubuntu-latest
     steps:
-      - name: Get the current branch name
-        shell: bash
-        run: echo "::set-output name=branch::${INPUT_BRANCH#refs/heads/}"
-        id: extract_branch
+      - name: Checkout ${{ github.ref }} branch
+        uses: actions/checkout@v1
+        with:
+          ref: ${{ github.ref }}
+
+      - uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.31.0
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16.13.0
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run ESLint
+        run: pnpm lint
+
+      - name: Run tests
+        run: pnpm test -- --maxWorkers=4 --no-color --coverage=false --changedSince=origin/main
+
+  deploy-to-dev:
+    name: Deploy to Dev
+    if: github.event.ref == 'refs/heads/develop'
+    needs: validations
+    uses: ./.github/workflows/deploy-app-workflow.yml
+    with:
+      environment: DEV
+      branch: develop
+    secrets:
+      ssh_host: ${{ secrets.HOST }}
+      ssh_user: ${{ secrets.USERNAME }}
+      ssh_key_ed25519: ${{ secrets.KEY_ED25519 }}
+      ssh_port: ${{ secrets.PORT }}
+
+  release:
+    name: Release
+    if: github.event.ref == 'refs/heads/main'
+    needs: validations
+    runs-on: ubuntu-latest
+    outputs:
+      skipped: ${{ steps.changelog.outputs.skipped }}
+      tag: ${{ steps.changelog.outputs.tag }}
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v1
+        with:
+          ref: main
+
+      - id: changelog
+        name: Conventional Changelog
+        uses: TriPSs/conventional-changelog-action@v3
+        with:
+          git-message: 'chore(release): {version} [no ci]'
+          git-user-email: emnnipal@gmail.com
+          git-user-name: Emmanuel Nipal
+          github-token: ${{ secrets.PAT }}
+          output-file: 'false'
+
+      - name: Create Github Release
+        uses: actions/create-release@v1
+        if: ${{ steps.changelog.outputs.skipped == 'false' }}
         env:
-          INPUT_BRANCH: ${{ inputs.branch }}
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+        with:
+          tag_name: ${{ steps.changelog.outputs.tag }}
+          release_name: ${{ steps.changelog.outputs.tag }}
+          body: ${{ steps.changelog.outputs.clean_changelog }}
 
-      - name: Deployment script below
-        run: |
-          echo "add your script here to deploy ${{ inputs.branch }} branch"
-          echo "extracted branch ${{ steps.extract_branch.outputs.branch }}"
-
-      # To get current branch from github.ref
-      # github.ref is not applicable for reusable workflows
-      # Use the extracted branch from inputs.branch instead
-      # - name: Get the current branch name
-      #   shell: bash
-      #   run: echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"
-      #   id: extract_branch
-
-      # If you will build your app in server
-      # - name: Deploy ${{ steps.extract_branch.outputs.branch }} branch to ${{ inputs.environment }}
-      #   uses: appleboy/ssh-action@master
-      #   with:
-      #     host: ${{ secrets.ssh_host }}
-      #     username: ${{ secrets.ssh_user }}
-      #     key: ${{ secrets.ssh_key_ed25519 }}
-      #     port: ${{ secrets.ssh_port }}
-      #     script: sh /home/ubuntu/apps/deployments/deploy.sh boilerplate-ts-nodejs ${{ steps.extract_branch.outputs.branch }}
+  deploy-to-staging:
+    name: Deploy to Staging
+    if: needs.release.outputs.skipped == 'false'
+    needs: release
+    uses: ./.github/workflows/deploy-app-workflow.yml
+    with:
+      environment: STAGING
+      branch: 'refs/tags/${{needs.release.outputs.tag}}'
+    secrets:
+      ssh_host: ${{ secrets.STAGING_HOST }}
+      ssh_user: ${{ secrets.USERNAME }}
+      ssh_key_ed25519: ${{ secrets.STAGING_KEY_ED25519 }}
+      ssh_port: ${{ secrets.PORT }}

@@ -3,7 +3,7 @@ on: workflow_dispatch
 
 jobs:
   manual-deploy-dev:
-    uses: ./.github/workflows/deploy-workflow.yml
+    uses: ./.github/workflows/deploy-app-workflow.yml
     with:
       environment: DEV
       branch: ${{ github.ref }}
