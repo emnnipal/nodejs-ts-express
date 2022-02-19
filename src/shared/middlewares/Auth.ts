@@ -4,7 +4,6 @@ import ErrorHandler from '../utils/ErrorHandler';
 import { validate } from '../validations';
 
 import { NextFunction, Request, Response } from 'express';
-import { validationResult } from 'express-validator';
 
 class AuthMiddleware {
   static verifyToken = (req: Request, res: Response, next: NextFunction): void => {
@@ -15,23 +14,36 @@ class AuthMiddleware {
     }
   };
 
-  static verifyRequest = () => async (req: Request, res: Response, next: NextFunction) => {
+  static verifyRequest = async (req: Request, res: Response, next: NextFunction) => {
+    const { body, query } = req;
     try {
-      const validations = validate(req.method as IMethods, `${req.baseUrl}${req.route.path}`);
+      const schema = validate(req.method as IMethods, `${req.baseUrl}${req.route.path}`);
 
-      await Promise.all(validations.map((validation) => validation.run(req)));
+      if (schema) {
+        const transformed = await schema
+          .validateAsync(
+            {
+              ...(body && { body }),
+              ...(query && { query }),
+            },
+            {
+              abortEarly: false,
+              stripUnknown: true,
+            }
+          )
+          .catch((error) => {
+            throw new ErrorHandler(HttpResponseType.BadRequest, {
+              errors: error.details,
+            });
+          });
 
-      const errors = validationResult(req);
-      if (errors.isEmpty()) {
-        next();
-        return;
+        req.body = transformed?.body || {};
+        req.query = transformed?.query || {};
       }
 
-      throw new ErrorHandler(HttpResponseType.BadRequest, {
-        errors: errors.array({ onlyFirstError: true }),
-      });
+      next();
     } catch (err) {
-      ErrorHandler.processError(err as Error, req, res);
+      ErrorHandler.processError(err as ErrorHandler, req, res);
     }
   };
 }

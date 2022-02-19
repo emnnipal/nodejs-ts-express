@@ -25,12 +25,12 @@ specifiers:
   eslint-plugin-import: ^2.25.4
   eslint-plugin-jest: ^26.1.1
   express: ^4.17.3
-  express-validator: ^6.14.0
   helmet: ^5.0.2
   husky: ^7.0.4
   jest: ^27.5.1
   jest-extended: ^2.0.0
   jest-mock-extended: ^2.0.4
+  joi: ^17.6.0
   lint-staged: ^12.3.4
   lodash: ^4.17.21
   morgan: ^1.10.0
@@ -47,8 +47,8 @@ dependencies:
   date-fns: 2.28.0
   dotenv: 16.0.0
   express: 4.17.3
-  express-validator: 6.14.0
   helmet: 5.0.2
+  joi: 17.6.0
   lodash: 4.17.21
   morgan: 1.10.0
   winston: 3.6.0
@@ -793,6 +793,22 @@ packages:
       - supports-color
     dev: true
 
+  /@hapi/hoek/9.2.1:
+    resolution:
+      {
+        integrity: sha512-gfta+H8aziZsm8pZa0vj04KO6biEiisppNgA1kbJvFrrWu9Vm7eaUEy76DIxsuTaWvti5fkJVhllWc6ZTE+Mdw==,
+      }
+    dev: false
+
+  /@hapi/topo/5.1.0:
+    resolution:
+      {
+        integrity: sha512-foQZKJig7Ob0BMAYBfcJk8d77QtOe7Wo4ox7ff1lQYoNNAb6jwcY1ncdoy2e9wQZzvNy7ODZCYJkK8kzmcAnAg==,
+      }
+    dependencies:
+      '@hapi/hoek': 9.2.1
+    dev: false
+
   /@humanwhocodes/config-array/0.9.3:
     resolution:
       {
@@ -1114,6 +1130,29 @@ packages:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.13.0
     dev: true
+
+  /@sideway/address/4.1.3:
+    resolution:
+      {
+        integrity: sha512-8ncEUtmnTsMmL7z1YPB47kPUq7LpKWJNFPsRzHiIajGC5uXlWGn+AmkYPcHNl8S4tcEGx+cnORnNYaw2wvL+LQ==,
+      }
+    dependencies:
+      '@hapi/hoek': 9.2.1
+    dev: false
+
+  /@sideway/formula/3.0.0:
+    resolution:
+      {
+        integrity: sha512-vHe7wZ4NOXVfkoRb8T5otiENVlT7a3IAiw7H5M2+GO+9CDgcVUUsX1zalAztCmwyOr2RUTGJdgB+ZvSVqmdHmg==,
+      }
+    dev: false
+
+  /@sideway/pinpoint/2.0.0:
+    resolution:
+      {
+        integrity: sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==,
+      }
+    dev: false
 
   /@sinonjs/commons/1.8.3:
     resolution:
@@ -3307,17 +3346,6 @@ packages:
       jest-message-util: 27.5.1
     dev: true
 
-  /express-validator/6.14.0:
-    resolution:
-      {
-        integrity: sha512-ZWHJfnRgePp3FKRSKMtnZVnD1s8ZchWD+jSl7UMseGIqhweCo1Z9916/xXBbJAa6PrA3pUZfkOvIsHZG4ZtIMw==,
-      }
-    engines: { node: '>= 8.0.0' }
-    dependencies:
-      lodash: 4.17.21
-      validator: 13.7.0
-    dev: false
-
   /express/4.17.3:
     resolution:
       {
@@ -4888,6 +4916,19 @@ packages:
       - ts-node
       - utf-8-validate
     dev: true
+
+  /joi/17.6.0:
+    resolution:
+      {
+        integrity: sha512-OX5dG6DTbcr/kbMFj0KGYxuew69HPcAE3K/sZpEV2nP6e/j/C0HV+HNiBPCASxdx5T7DMoa0s8UeHWMnb6n2zw==,
+      }
+    dependencies:
+      '@hapi/hoek': 9.2.1
+      '@hapi/topo': 5.1.0
+      '@sideway/address': 4.1.3
+      '@sideway/formula': 3.0.0
+      '@sideway/pinpoint': 2.0.0
+    dev: false
 
   /js-tokens/4.0.0:
     resolution:
@@ -7188,14 +7229,6 @@ packages:
       spdx-correct: 3.1.1
       spdx-expression-parse: 3.0.1
     dev: true
-
-  /validator/13.7.0:
-    resolution:
-      {
-        integrity: sha512-nYXQLCBkpJ8X6ltALua9dRrZDHVYxjJ1wgskNt1lH9fzGjs3tgojGSCBjmEPwkWS1y29+DrizMTW19Pr9uB2nw==,
-      }
-    engines: { node: '>= 0.10' }
-    dev: false
 
   /vary/1.1.2:
     resolution: { integrity: sha1-IpnwLG3tMNSllhsLn3RSShj2NPw= }

@@ -5,7 +5,7 @@ import { Router } from 'express';
 
 const usersRoute: Router = Router();
 
-usersRoute.get('/', AuthMiddleware.verifyRequest(), UsersController.get);
-usersRoute.post('/', AuthMiddleware.verifyRequest(), UsersController.create);
+usersRoute.get('/', AuthMiddleware.verifyRequest, UsersController.get);
+usersRoute.post('/', AuthMiddleware.verifyRequest, UsersController.create);
 
 export default usersRoute;

@@ -2,7 +2,7 @@ import UsersValidations from './Users';
 
 import { IMethods } from '../interfaces/Auth';
 
-import { ValidationChain } from 'express-validator';
+import Joi from 'joi';
 import get from 'lodash/get';
 
 export const Validators = {
@@ -20,9 +20,5 @@ export const validate = (method: IMethods, originalUrl: string) => {
 
   const validator = get(Validators, [apiVersion, entity, method, action]);
 
-  if (!validator) {
-    throw Error('Missing validation schema');
-  }
-
-  return validator as ValidationChain[];
+  return validator as Joi.ObjectSchema | undefined;
 };
