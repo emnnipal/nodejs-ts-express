@@ -4,7 +4,7 @@ on:
     branches: [main, develop]
 
 jobs:
-  validations:
+  lint-and-test:
     name: Lint and unit test
     runs-on: ubuntu-latest
     steps:
@@ -34,7 +34,7 @@ jobs:
   deploy-to-dev:
     name: Deploy to Dev
     if: github.event.ref == 'refs/heads/develop'
-    needs: validations
+    needs: lint-and-test
     uses: ./.github/workflows/deploy-app-workflow.yml
     with:
       environment: DEV
@@ -48,7 +48,7 @@ jobs:
   release:
     name: Release
     if: github.event.ref == 'refs/heads/main'
-    needs: validations
+    needs: lint-and-test
     runs-on: ubuntu-latest
     outputs:
       skipped: ${{ steps.changelog.outputs.skipped }}
