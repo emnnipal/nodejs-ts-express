@@ -29,7 +29,7 @@ jobs:
   deploy-app:
     runs-on: ubuntu-latest
     steps:
-      - name: Get the current branch name
+      - name: Extract branch name from ${{ inputs.branch }}
         shell: bash
         run: echo "::set-output name=branch::${INPUT_BRANCH#refs/heads/}"
         id: extract_branch
