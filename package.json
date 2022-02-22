@@ -18,7 +18,7 @@
     "build": "rm -rf ./build && tsc",
     "dev": "ts-node-dev --respawn --files src/index.ts",
     "start": "cross-env NODE_ENV=production node build/index.js",
-    "pm2:start": "pm2 start npm --name 'sample-app-name' -- run start",
+    "pm2:start": "pm2 start npm --name 'test-app-name' -- run start",
     "deploy": "npm run build && npm run pm2:start",
     "prepare": "husky install"
   },
