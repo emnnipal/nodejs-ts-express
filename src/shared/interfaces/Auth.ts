@@ -1,10 +1,10 @@
-import { ValidationChain } from 'express-validator';
+import Joi from 'joi';
 
 export type IMethods = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 
 export type IValidator = {
   [method in IMethods]: {
-    default: ValidationChain[] | ValidationChain;
-    [endpoint: string]: ValidationChain[] | ValidationChain;
+    default: Joi.ObjectSchema;
+    [endpoint: string]: Joi.ObjectSchema;
   };
 };
