@@ -28,3 +28,25 @@ jobs:
 
       - name: Run tests
         run: pnpm test -- --maxWorkers=4 --no-color --coverage=false --changedSince=origin/main
+
+  pr-test-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          ref: ${{ github.ref }}
+
+      - uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.31.0
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16.13.0
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build App
+        run: pnpm build
