@@ -1,9 +1,18 @@
+# directories
 node_modules/
 dist/
 build/
 api-build/
 coverage/
+logs/
+
+# secrets
 .env
+
+# logs
+*-error.log
+
+# misc
 .eslintcache
 .vscode
-*-error.log
+

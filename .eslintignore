@@ -1,13 +1,21 @@
+# directories
 node_modules/
 dist/
 build/
 api-build/
 coverage/
-commitlint.config.js
+
+# config
 jest.*.ts
-babel.config.js
+*.config.js
+
+# secrets
 .env
+
+# logs
+*-error.log
+
+# misc
 .eslintcache
 .vscode
-*-error.log
-global.d.ts
+

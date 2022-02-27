@@ -1,10 +1,19 @@
+# directories
 node_modules/
-api-build/
+dist/
 build/
+api-build/
 coverage/
 logs/
+
+# secrets
 .env
-.eslintcache
-.vscode
+
+# logs
 *-error.log
 *-debug.log
+
+# misc
+.eslintcache
+.vscode
+

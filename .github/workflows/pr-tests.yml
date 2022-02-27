@@ -49,4 +49,4 @@ jobs:
         run: pnpm install
 
       - name: Check Types
-        run: pnpm build -- --noEmit
+        run: pnpm check:types

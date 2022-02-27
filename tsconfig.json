@@ -20,6 +20,5 @@
     "resolveJsonModule": true
   },
   "exclude": ["src/**/*.test.ts", "src/**/fixtures/**"],
-  "include": ["src/**/*.ts"],
-  "files": ["global.d.ts"]
+  "include": ["src/**/*.ts"]
 }
