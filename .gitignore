@@ -15,5 +15,6 @@ logs/
 
 # misc
 .eslintcache
-.vscode
-
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
