@@ -1,4 +1,4 @@
-# boilerplate-ts-nodejs
+# nodejs-ts-express
 
 Boilerplate for NodeJS with ExpressJS and TypeScript
 
@@ -24,6 +24,6 @@ Boilerplate for NodeJS with ExpressJS and TypeScript
 
 ## Tech Stack
 
-- Node JS
+- Node JS with esbuild
 - TypeScript
 - Jest for testing

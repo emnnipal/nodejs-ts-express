@@ -9,6 +9,8 @@ export enum HttpResponseType {
   BadRequest = 'badRequest',
   Unauthorized = 'unauthorized',
   NotFound = 'notFound',
+  Forbidden = 'forbidden',
+  PayloadTooLarge = 'payloadTooLarge',
 }
 
 export const HttpResponses: { [Key in HttpResponseType]: IHttpResponse } = {
@@ -51,5 +53,15 @@ export const HttpResponses: { [Key in HttpResponseType]: IHttpResponse } = {
     message: 'Not Found',
     statusCode: 404,
     code: 7,
+  },
+  forbidden: {
+    message: 'Forbidden',
+    statusCode: 403,
+    code: 8,
+  },
+  payloadTooLarge: {
+    message: 'Payload Too Large',
+    statusCode: 413,
+    code: 9,
   },
 };
