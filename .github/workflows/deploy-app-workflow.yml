@@ -3,7 +3,10 @@
 #    ssh-keygen -f ~/.ssh/github_actions/your_repo -t ed25519 -b 4096 -C "youremail@example.com"
 #
 # 2. Copy our public key to the remote server’s authorize
-#    cat your_repo.pub >> .ssh/authorized_keys
+#    cat github_actions/your_repo.pub >> .ssh/authorized_keys
+#
+# 3. copy our Private Key and paste it into Github Secrets.
+#    cat github_actions/your_repo >> Github Secrets -> ssh_key_ed25519
 
 name: 'Deploy app workflow'
 on:

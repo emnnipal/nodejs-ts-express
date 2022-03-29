@@ -2,7 +2,6 @@
 node_modules/
 dist/
 build/
-api-build/
 coverage/
 logs/
 
@@ -11,6 +10,7 @@ logs/
 
 # logs
 *-error.log
+*-debug.log
 
 # misc
 .eslintcache

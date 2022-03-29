@@ -2,11 +2,11 @@
 node_modules/
 dist/
 build/
-api-build/
 coverage/
+logs/
 
 # config
-jest.*.ts
+*.config.ts
 *.config.js
 
 # secrets
@@ -14,6 +14,7 @@ jest.*.ts
 
 # logs
 *-error.log
+*-debug.log
 
 # misc
 .eslintcache
