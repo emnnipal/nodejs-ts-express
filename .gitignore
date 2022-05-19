@@ -13,6 +13,7 @@ logs/
 *-debug.log
 
 # misc
+.DS_Store
 .eslintcache
 .vscode/*
 !.vscode/settings.json
