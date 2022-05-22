@@ -3,6 +3,7 @@
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "mikestead.dotenv",
-    "firsttris.vscode-jest-runner"
+    "firsttris.vscode-jest-runner",
+    "ms-azuretools.vscode-docker"
   ]
 }

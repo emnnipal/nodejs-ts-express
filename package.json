@@ -23,6 +23,8 @@
     "pm2:start": "pm2 start npm --name 'sample-app-name' -- run start",
     "pm2:cluster:start": "pm2 start -i 0 npm --name 'sample-app-name' -- run start",
     "deploy": "npm run build && npm run pm2:start",
+    "docker:build": "docker build -t template/nodejs-ts-express .",
+    "docker:run": "docker run --name nodejs-ts-express -p 3000:8080 -d template/nodejs-ts-express",
     "prepare": "husky install"
   },
   "lint-staged": {
