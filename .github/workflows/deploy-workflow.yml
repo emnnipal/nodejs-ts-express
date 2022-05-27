@@ -32,7 +32,7 @@ jobs:
         run: pnpm lint
 
       - name: Run tests
-        run: pnpm test -- --changed main
+        run: pnpm test
 
   deploy-to-dev:
     name: Deploy to Dev

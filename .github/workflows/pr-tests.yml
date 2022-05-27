@@ -27,7 +27,7 @@ jobs:
         run: pnpm lint
 
       - name: Run tests
-        run: pnpm test -- --changed main
+        run: pnpm test
 
   pr-check-types:
     runs-on: ubuntu-latest
