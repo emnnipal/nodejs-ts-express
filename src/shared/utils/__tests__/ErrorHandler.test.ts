@@ -1,18 +1,30 @@
-import 'jest-extended';
 import { HttpResponses, HttpResponseType } from '../../constants/Http';
 import ErrorHandler from '../ErrorHandler';
 import logger from '../Logger';
 
 import { Request, Response } from 'express';
+import { describe, expect, it, vi } from 'vitest';
 
-const transformErrToJSON = (error: Error) => JSON.parse(JSON.stringify(error));
+const transformErrToJSON = (error: Error) =>
+  JSON.parse(JSON.stringify(error)) as Record<string, unknown>;
 
-jest.mock('../Logger');
+vi.mock('../Logger', () => ({
+  default: {
+    error: vi.fn(),
+    warn: vi.fn(),
+  },
+}));
+
+const console = {
+  error: vi.fn(),
+  log: vi.fn(),
+};
+
+vi.stubGlobal('console', console);
 
 describe('ErrorHandler', () => {
-  const errLoggerSpy = jest.spyOn(console, 'error').mockImplementation();
-  const mockJSON = jest.fn();
-  const mockStatus = jest.fn().mockReturnValue({
+  const mockJSON = vi.fn();
+  const mockStatus = vi.fn().mockReturnValue({
     json: mockJSON,
   });
   const mockResponse = {
@@ -40,7 +52,7 @@ describe('ErrorHandler', () => {
     it.each(Object.values(HttpResponseType))(`should throw without crashing - %s`, (value) => {
       const mockJSONResponse = HttpResponses[value];
       const error = new ErrorHandler(value);
-
+      console.log('value', value);
       ErrorHandler.processError(error, mockRequest, mockResponse);
 
       expect(error).toBeInstanceOf(ErrorHandler);
@@ -118,13 +130,16 @@ describe('ErrorHandler', () => {
       const mockError = new Error('test');
       ErrorHandler.processError(mockError, mockRequest, mockResponse);
 
+      expect(vi.isMockFunction(logger.error)).toBe(true);
+      expect(vi.isMockFunction(console.error)).toBe(true);
+
       expect(logger.error).toHaveBeenCalledWith(
         'Unhandled Error',
         mockErrorDetails,
         mockRequest.body,
         mockError
       );
-      expect(errLoggerSpy).toHaveBeenCalledWith(expect.any(String), mockError);
+      expect(console.error).toHaveBeenCalledWith(expect.any(String), mockError);
 
       const errResponse = HttpResponses[HttpResponseType.ServerError];
       expect(mockStatus).toHaveBeenCalledWith(errResponse.statusCode);
@@ -137,7 +152,7 @@ describe('ErrorHandler', () => {
 
       ErrorHandler.processError(mockError, mockData as unknown as Request, mockResponse);
 
-      expect(errLoggerSpy).toHaveBeenCalledWith(expect.any(String), mockError);
+      expect(console.error).toHaveBeenCalledWith(expect.any(String), mockError);
 
       expect(logger.error).toHaveBeenCalledWith(
         'Unhandled Error',

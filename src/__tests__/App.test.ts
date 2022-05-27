@@ -1,14 +1,9 @@
 import createServer from '../App';
 import { HttpResponses, HttpResponseType } from '../shared/constants/Http';
 
-import { Application, NextFunction, Request, Response } from 'express';
+import { Application } from 'express';
 import supertest from 'supertest';
-
-jest.mock('morgan', () =>
-  jest.fn().mockImplementation(() => (req: Request, res: Response, next: NextFunction) => {
-    next();
-  })
-);
+import { beforeAll, describe, expect, it } from 'vitest';
 
 describe('App', () => {
   let app: Application;

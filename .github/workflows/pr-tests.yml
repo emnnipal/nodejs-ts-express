@@ -27,7 +27,7 @@ jobs:
         run: pnpm lint
 
       - name: Run tests
-        run: pnpm test -- --maxWorkers=4 --no-color --coverage=false --changedSince=origin/main
+        run: pnpm test -- --changed main
 
   pr-check-types:
     runs-on: ubuntu-latest
