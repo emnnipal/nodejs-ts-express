@@ -14,6 +14,7 @@
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:ui": "vitest --ui",
     "coverage": "vitest run --coverage",
     "lint": "eslint --ext .ts ./src",
     "lint:fix": "eslint --fix --ext .ts ./src",
@@ -46,6 +47,7 @@
     "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "^5.12.0",
     "@typescript-eslint/parser": "^5.12.0",
+    "@vitest/ui": "^0.12.9",
     "c8": "^7.11.3",
     "cross-env": "^7.0.3",
     "esbuild": "^0.14.23",
