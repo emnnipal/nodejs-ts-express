@@ -68,8 +68,8 @@ jobs:
         uses: TriPSs/conventional-changelog-action@v3
         with:
           git-message: 'chore(release): {version} [no ci]'
-          git-user-email: emnnipal@gmail.com
-          git-user-name: Emmanuel Nipal
+          # git-user-email: emnnipal@gmail.com
+          # git-user-name: Emmanuel Nipal
           github-token: ${{ secrets.GITHUB_TOKEN }}
           output-file: 'false'
 
