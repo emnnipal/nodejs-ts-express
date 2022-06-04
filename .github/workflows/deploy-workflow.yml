@@ -58,9 +58,10 @@ jobs:
       tag: ${{ steps.changelog.outputs.tag }}
     steps:
       - name: Checkout main branch
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
         with:
           ref: main
+          token: ${{ secrets.PAT }}
 
       - id: changelog
         name: Conventional Changelog
@@ -69,7 +70,7 @@ jobs:
           git-message: 'chore(release): {version} [no ci]'
           git-user-email: emnnipal@gmail.com
           git-user-name: Emmanuel Nipal
-          github-token: ${{ secrets.PAT }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           output-file: 'false'
 
       - name: Create Github Release
