@@ -31,6 +31,10 @@ on:
 jobs:
   deploy-app:
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    concurrency:
+      cancel-in-progress: true
+      group: ${{ inputs.environment }}
     steps:
       - name: Extract branch name from ${{ inputs.branch }}
         shell: bash
@@ -43,6 +47,12 @@ jobs:
         run: |
           echo "add your script here to deploy ${{ inputs.branch }} branch"
           echo "extracted branch ${{ steps.extract_branch.outputs.branch }}"
+
+      - name: Check ${{ inputs.environment }} env
+        run: |
+          [[ "${{ secrets.ssh_host }}" == "DEV" ]] && echo "env isDev"
+          [[ "${{ secrets.ssh_host }}" == "STAGING" ]] && echo "env isStaging"
+          echo "environment ${{ inputs.environment }}"
 
       # To get current branch from github.ref
       # github.ref is not applicable for reusable workflows

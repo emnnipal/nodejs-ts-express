@@ -3,6 +3,10 @@ on:
   push:
     branches: [main, develop]
 
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.ref }}
+
 jobs:
   lint-and-test:
     name: Lint and unit test
@@ -40,13 +44,13 @@ jobs:
     needs: lint-and-test
     uses: ./.github/workflows/deploy-app-workflow.yml
     with:
-      environment: DEV
+      environment: dev
       branch: develop
     secrets:
-      ssh_host: ${{ secrets.HOST }}
-      ssh_user: ${{ secrets.USERNAME }}
-      ssh_key_ed25519: ${{ secrets.KEY_ED25519 }}
-      ssh_port: ${{ secrets.PORT }}
+      ssh_host: ${{ secrets.SSH_HOST }}
+      ssh_user: ${{ secrets.SSH_USER }}
+      ssh_key_ed25519: ${{ secrets.SSH_KEY_ED25519 }}
+      ssh_port: ${{ secrets.SSH_PORT }}
 
   release:
     name: Release
@@ -89,10 +93,10 @@ jobs:
     needs: release
     uses: ./.github/workflows/deploy-app-workflow.yml
     with:
-      environment: STAGING
+      environment: staging
       branch: 'refs/tags/${{needs.release.outputs.tag}}'
     secrets:
-      ssh_host: ${{ secrets.STAGING_HOST }}
-      ssh_user: ${{ secrets.USERNAME }}
-      ssh_key_ed25519: ${{ secrets.STAGING_KEY_ED25519 }}
-      ssh_port: ${{ secrets.PORT }}
+      ssh_host: ${{ secrets.SSH_HOST }}
+      ssh_user: ${{ secrets.SSH_USER }}
+      ssh_key_ed25519: ${{ secrets.SSH_KEY_ED25519 }}
+      ssh_port: ${{ secrets.SSH_PORT }}

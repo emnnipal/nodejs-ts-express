@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: 'Environment to deploy'
+        description: 'Environment'
         required: true
         type: choice
         default: 'dev'
@@ -13,27 +13,27 @@ on:
 
 jobs:
   manual-deploy-dev:
-    name: 'Deploy to Dev'
-    if: ${{ github.event.inputs.environment == 'dev' }}
+    name: '${{ github.event.inputs.environment }}:${{ github.ref_name }}'
     uses: ./.github/workflows/deploy-app-workflow.yml
     with:
-      environment: DEV
+      environment: ${{ github.event.inputs.environment }}
       branch: ${{ github.ref }}
     secrets:
-      ssh_host: ${{ secrets.HOST }}
-      ssh_user: ${{ secrets.USERNAME }}
-      ssh_key_ed25519: ${{ secrets.KEY_ED25519 }}
-      ssh_port: ${{ secrets.PORT }}
+      ssh_host: ${{ secrets.SSH_HOST }}
+      ssh_user: ${{ secrets.SSH_USER }}
+      ssh_key_ed25519: ${{ secrets.SSH_KEY_ED25519 }}
+      ssh_port: ${{ secrets.SSH_PORT }}
 
-  manual-deploy-staging:
-    name: 'Deploy to Staging'
-    if: ${{ github.event.inputs.environment == 'staging' }}
-    uses: ./.github/workflows/deploy-app-workflow.yml
-    with:
-      environment: STAGING
-      branch: ${{ github.ref }}
-    secrets:
-      ssh_host: ${{ secrets.STAGING_HOST }}
-      ssh_user: ${{ secrets.USERNAME }}
-      ssh_key_ed25519: ${{ secrets.STAGING_KEY_ED25519 }}
-      ssh_port: ${{ secrets.PORT }}
+  # This is useful for conditional workflow_dispatch jobs
+  # manual-deploy-staging:
+  #   name: 'Deploy to Staging'
+  #   if: ${{ github.event.inputs.environment == 'staging' }}
+  #   uses: ./.github/workflows/deploy-app-workflow.yml
+  #   with:
+  #     environment: STAGING
+  #     branch: ${{ github.ref }}
+  #   secrets:
+  #     ssh_host: ${{ secrets.SSH_HOST }}
+  #     ssh_user: ${{ secrets.SSH_USER }}
+  #     ssh_key_ed25519: ${{ secrets.SSH_KEY_ED25519 }}
+  #     ssh_port: ${{ secrets.SSH_PORT }}
