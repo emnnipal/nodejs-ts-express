@@ -12,7 +12,7 @@ on:
           - staging
 
 jobs:
-  manual-deploy-dev:
+  manual-deploy:
     name: '${{ github.event.inputs.environment }}:${{ github.ref_name }}'
     uses: ./.github/workflows/deploy-app-workflow.yml
     with:
