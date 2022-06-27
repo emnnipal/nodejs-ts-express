@@ -4,7 +4,6 @@ FROM node:14
 # ENV NODE_VERSION 16.15.0
 ENV HOME /app
 ENV PORT 8080
-ENV NODE_ENV production
 
 # install pnpm
 RUN curl -f https://get.pnpm.io/v6.16.js | node - add --global pnpm
