@@ -1,6 +1,6 @@
 {
   "name": "nodejs-ts-express",
-  "version": "0.8.7",
+  "version": "0.8.8",
   "description": "Boilerplate for node js with typescript",
   "private": true,
   "main": "index.js",
