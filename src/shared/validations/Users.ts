@@ -1,28 +1,17 @@
-import { IValidator } from '../interfaces/Auth';
-import { RequireAtLeastOne } from '../interfaces/Common';
+import { z } from 'zod';
 
-import Joi from 'joi';
-
-// Change to Joi JS
-const UsersValidations: RequireAtLeastOne<IValidator> = {
-  POST: {
-    default: Joi.object({
-      body: Joi.object({
-        email: Joi.string().email().required(),
-        name: Joi.string().required(),
-        details: Joi.object({
-          address: Joi.string().required(),
-        }).required(),
-      }).required(),
+export const UserSchemas = {
+  create: z.object({
+    email: z.string().email().min(1),
+    name: z.string().min(1),
+    details: z.object({
+      address: z.string().min(1),
     }),
-  },
-  GET: {
-    default: Joi.object({
-      query: Joi.object({
-        id: Joi.string().uuid().required(),
-      }).required(),
-    }),
-  },
+  }),
+  get: z.object({
+    id: z.string().uuid(),
+  }),
 };
 
-export default UsersValidations;
+export type CreateUserType = z.infer<typeof UserSchemas.create>;
+export type GetUserType = z.infer<typeof UserSchemas.get>;

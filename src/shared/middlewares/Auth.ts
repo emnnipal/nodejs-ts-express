@@ -1,9 +1,8 @@
 import { HttpResponseType } from '../constants/Http';
-import { IMethods } from '../interfaces/Auth';
 import ErrorHandler from '../utils/ErrorHandler';
-import { validate } from '../validations';
 
 import { NextFunction, Request, Response } from 'express';
+import { ZodError, ZodSchema } from 'zod';
 
 class AuthMiddleware {
   static verifyToken = (req: Request, res: Response, next: NextFunction): void => {
@@ -14,38 +13,26 @@ class AuthMiddleware {
     }
   };
 
-  static verifyRequest = async (req: Request, res: Response, next: NextFunction) => {
-    const { body, query } = req;
-    try {
-      const schema = validate(req.method as IMethods, `${req.baseUrl}${req.route.path}`);
-
-      if (schema) {
-        const transformed = await schema
-          .validateAsync(
-            {
-              ...(body && { body }),
-              ...(query && { query }),
-            },
-            {
-              abortEarly: false,
-              stripUnknown: true,
-            }
-          )
-          .catch((error) => {
+  static verifyRequest =
+    (schema: ZodSchema, property: 'body' | 'query') =>
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        if (schema) {
+          const data: Record<string, unknown> = req[property];
+          const sanitizedValues = await schema.parseAsync(data).catch((err: ZodError) => {
             throw new ErrorHandler(HttpResponseType.BadRequest, {
-              errors: error.details,
+              errors: err.errors,
             });
           });
 
-        req.body = transformed?.body || {};
-        req.query = transformed?.query || {};
-      }
+          req[property] = sanitizedValues;
+        }
 
-      next();
-    } catch (err) {
-      ErrorHandler.processError(err as ErrorHandler, req, res);
-    }
-  };
+        next();
+      } catch (err) {
+        ErrorHandler.processError(err as ErrorHandler, req, res);
+      }
+    };
 }
 
 export default AuthMiddleware;

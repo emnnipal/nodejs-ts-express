@@ -1,11 +1,16 @@
 import UsersController from '../../controllers/Users';
 import AuthMiddleware from '../../shared/middlewares/Auth';
+import { UserSchemas } from '../../shared/validations/Users';
 
 import { Router } from 'express';
 
 const usersRoute: Router = Router();
 
-usersRoute.get('/', AuthMiddleware.verifyRequest, UsersController.get);
-usersRoute.post('/', AuthMiddleware.verifyRequest, UsersController.create);
+usersRoute.get('/', AuthMiddleware.verifyRequest(UserSchemas.get, 'query'), UsersController.get);
+usersRoute.post(
+  '/',
+  AuthMiddleware.verifyRequest(UserSchemas.create, 'body'),
+  UsersController.create
+);
 
 export default usersRoute;
