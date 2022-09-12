@@ -9,12 +9,13 @@ import helmet from 'helmet';
 function createServer() {
   const app: Application = express();
 
+  app.use(express.urlencoded({ extended: false }));
+
   app.use(cors());
   app.use(helmet());
   app.use(morganMiddleware);
   app.use(express.json());
   app.use(AppMiddleware.syntaxError);
-  app.use(express.urlencoded({ extended: false }));
 
   app.use('/api', routes);
   app.use('/api/health', AppMiddleware.healthCheck);
