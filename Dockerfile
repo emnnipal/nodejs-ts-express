@@ -23,6 +23,12 @@ COPY etsc.config.js ./
 COPY .env ./
 COPY src ./src
 
+# Copy ormconfig for database migrations
+# COPY ormconfig.ts ./
+
+# run database migration
+# RUN pnpm --if-present migration:run
+
 RUN pnpm build
 
 EXPOSE 8080
