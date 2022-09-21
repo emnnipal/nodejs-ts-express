@@ -14,14 +14,14 @@ WORKDIR ${HOME}
 
 # copy package.json and install first to prevent reinstalling of dependencies
 # when there are changes in files from src directory
-COPY package.json pnpm-lock.yaml ${HOME}
+COPY package.json pnpm-lock.yaml ./
 RUN pnpm fetch
 RUN pnpm install --frozen-lockfile --ignore-scripts
 
-COPY tsconfig.json ${HOME}
-COPY etsc.config.js ${HOME}
-COPY .env ${HOME}
-COPY src ${HOME}/src
+COPY tsconfig.json ./
+COPY etsc.config.js ./
+COPY .env ./
+COPY src ./src
 
 RUN pnpm build
 
