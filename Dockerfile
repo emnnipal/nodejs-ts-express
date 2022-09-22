@@ -5,6 +5,10 @@ FROM node:14
 ENV HOME /app
 ENV PORT 8080
 
+# uncomment this line if you're using localhost as DB_HOST
+# or set host.docker.internal in your env file instead
+# ENV DB_HOST host.docker.internal
+
 # install pnpm
 RUN curl -f https://get.pnpm.io/v6.16.js | node - add --global pnpm
 
