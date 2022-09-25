@@ -42,7 +42,7 @@ jobs:
     name: Deploy to Dev
     if: github.event.ref == 'refs/heads/develop'
     needs: lint-and-test
-    uses: ./.github/workflows/deploy-app-workflow.yml
+    uses: ./.github/workflows/deploy-action.yml
     with:
       environment: dev
       branch: develop
@@ -91,7 +91,7 @@ jobs:
     name: Deploy to Staging
     if: needs.release.outputs.skipped == 'false'
     needs: release
-    uses: ./.github/workflows/deploy-app-workflow.yml
+    uses: ./.github/workflows/deploy-action.yml
     with:
       environment: staging
       branch: 'refs/tags/${{needs.release.outputs.tag}}'

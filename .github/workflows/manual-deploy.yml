@@ -14,7 +14,7 @@ on:
 jobs:
   manual-deploy:
     name: '${{ github.event.inputs.environment }}:${{ github.ref_name }}'
-    uses: ./.github/workflows/deploy-app-workflow.yml
+    uses: ./.github/workflows/deploy-action.yml
     with:
       environment: ${{ github.event.inputs.environment }}
       branch: ${{ github.ref }}
@@ -28,7 +28,7 @@ jobs:
   # manual-deploy-staging:
   #   name: 'Deploy to Staging'
   #   if: ${{ github.event.inputs.environment == 'staging' }}
-  #   uses: ./.github/workflows/deploy-app-workflow.yml
+  #   uses: ./.github/workflows/deploy-action.yml
   #   with:
   #     environment: STAGING
   #     branch: ${{ github.ref }}
