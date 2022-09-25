@@ -7,14 +7,6 @@
   "eslint.useESLintClass": true,
   "eslint.alwaysShowStatus": true,
   "eslint.validate": ["javascript", "typescript"],
-  // to ensure user's editor formatter settings is overwritten
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": true
-    }
-  },
   "search.exclude": {
     "**/node_modules": true,
     "pnpm-lock.yaml": true
