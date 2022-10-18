@@ -69,7 +69,7 @@ jobs:
 
       - id: changelog
         name: Conventional Changelog
-        uses: TriPSs/conventional-changelog-action@v3.15.0
+        uses: TriPSs/conventional-changelog-action@v3
         with:
           git-message: 'chore(release): {version} [no ci]'
           git-user-email: emnnipal@gmail.com
