@@ -38,7 +38,7 @@ jobs:
     steps:
       - name: Extract branch name from ${{ inputs.branch }}
         shell: bash
-        run: echo "::set-output name=branch::${INPUT_BRANCH#refs/heads/}"
+        run: echo "BRANCH=${INPUT_BRANCH#refs/heads/}" >> $GITHUB_OUTPUT
         id: extract_branch
         env:
           INPUT_BRANCH: ${{ inputs.branch }}
@@ -46,7 +46,7 @@ jobs:
       - name: Deployment script below
         run: |
           echo "add your script here to deploy ${{ inputs.branch }} branch"
-          echo "extracted branch ${{ steps.extract_branch.outputs.branch }}"
+          echo "extracted branch ${{ steps.extract_branch.outputs.BRANCH }}"
 
       - name: Check ${{ inputs.environment }} env
         run: |
@@ -59,15 +59,15 @@ jobs:
       # Use the extracted branch from inputs.branch instead
       # - name: Get the current branch name
       #   shell: bash
-      #   run: echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"
+      #   run: echo "BRANCH=${GITHUB_REF#refs/heads/}" >> $GITHUB_OUTPUT
       #   id: extract_branch
 
       # If you will build your app in server
-      # - name: Deploy ${{ steps.extract_branch.outputs.branch }} branch to ${{ inputs.environment }}
+      # - name: Deploy ${{ steps.extract_branch.outputs.BRANCH }} branch to ${{ inputs.environment }}
       #   uses: appleboy/ssh-action@master
       #   with:
       #     host: ${{ secrets.ssh_host }}
       #     username: ${{ secrets.ssh_user }}
       #     key: ${{ secrets.ssh_key_ed25519 }}
       #     port: ${{ secrets.ssh_port }}
-      #     script: sh /home/ubuntu/apps/deployments/deploy.sh boilerplate-ts-nodejs ${{ steps.extract_branch.outputs.branch }}
+      #     script: sh /home/ubuntu/apps/deployments/deploy.sh boilerplate-ts-nodejs ${{ steps.extract_branch.outputs.BRANCH }}
