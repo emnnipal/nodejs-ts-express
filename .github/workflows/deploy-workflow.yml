@@ -76,7 +76,7 @@ jobs:
           git-user-name: Emmanuel Nipal
           github-token: ${{ secrets.GITHUB_TOKEN }}
           output-file: 'false'
-          pre-release: true
+          pre-release: false
 
       - name: Create Github Release
         uses: actions/create-release@v1

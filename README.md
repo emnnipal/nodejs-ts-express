@@ -27,6 +27,3 @@ Boilerplate for NodeJS with ExpressJS and TypeScript
 - Node JS with esbuild
 - TypeScript
 - Jest for testing
-
-some random changes to test pre release
-again some random change
