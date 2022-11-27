@@ -82,13 +82,13 @@ jobs:
           release_name: ${{ steps.changelog.outputs.tag }}
           body: ${{ steps.changelog.outputs.clean_changelog }}
 
-  deploy-to-staging:
-    name: Deploy to Staging
+  deploy-to-production:
+    name: Deploy to Production
     if: needs.release.outputs.skipped == 'false'
     needs: release
     uses: ./.github/workflows/deploy-action.yml
     with:
-      environment: staging
+      environment: production
       branch: 'refs/tags/${{needs.release.outputs.tag}}'
     secrets:
       ssh_host: ${{ secrets.SSH_HOST }}
