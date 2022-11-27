@@ -29,14 +29,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --ignore-scripts
 
-      - name: Check Types
-        run: pnpm check:types
-
-      - name: Run ESLint
-        run: pnpm lint
-
       - name: Run tests
-        run: pnpm test -- --changed ${{ github.ref }}
+        run: pnpm lint & pnpm check:types & pnpm test -- --changed ${{ github.ref }} & wait
 
   deploy-to-dev:
     name: Deploy to Dev
