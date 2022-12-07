@@ -30,7 +30,7 @@ jobs:
         run: pnpm install --frozen-lockfile --ignore-scripts
 
       - name: Run lint and type checks
-        run: pnpm lint & pnpm check:types & wait
+        run: pnpm lint & pnpm check:types & wait -n
 
       - name: Run tests
         run: pnpm test -- --changed ${{ github.ref }}
