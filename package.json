@@ -19,7 +19,7 @@
     "lint": "eslint --ext .ts ./src",
     "lint:fix": "eslint --fix --ext .ts ./src",
     "format": "npx prettier --write .",
-    "check:types": "tsc --noEmit",
+    "check:types": "tsc --noEmit -p tsconfig.eslint.json",
     "build": "rm -rf ./build && etsc",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "start": "cross-env NODE_ENV=production node build/index.js",
