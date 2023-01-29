@@ -8,7 +8,6 @@
     "moduleResolution": "node",
     "removeComments": true,
     "strict": true,
-    // "strictPropertyInitialization": false, // uncomment for typeorm
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true,
