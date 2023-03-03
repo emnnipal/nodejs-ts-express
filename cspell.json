@@ -1,0 +1,15 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": ["pnpm", "etsc", "ormconfig", "emarketeer", "postbuild", "commitlint", "asynciterable"],
+  "flagWords": [],
+  "ignorePaths": [
+    "node_modules/",
+    "build/",
+    "logs/",
+    "coverage/",
+    ".husky",
+    "pnpm-lock.yaml",
+    "package.json"
+  ]
+}

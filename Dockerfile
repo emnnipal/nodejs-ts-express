@@ -1,6 +1,6 @@
 FROM node:14
 
-# TODO: check if pnpm is availabe in node 16
+# TODO: check if pnpm is available in node 16
 # ENV NODE_VERSION 16.15.0
 ENV HOME /app
 ENV PORT 8080

@@ -1,6 +1,6 @@
 import { routes } from './routes';
-import AppMiddleware from './shared/middlewares/App';
-import morganMiddleware from './shared/middlewares/Morgan';
+import AppMiddleware from './shared/middleware/App';
+import morganMiddleware from './shared/middleware/Morgan';
 
 import cors from 'cors';
 import express, { Application } from 'express';

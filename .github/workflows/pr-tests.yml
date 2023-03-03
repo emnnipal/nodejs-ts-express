@@ -28,4 +28,6 @@ jobs:
           pnpm concurrently -g \
           "pnpm lint" \
           "pnpm check:types" \
-          "pnpm test"
+          "pnpm test" \
+          "pnpm prettier --check --ignore-unknown ." \
+          "npx cspell ./ --no-progress --no-must-find-files"
