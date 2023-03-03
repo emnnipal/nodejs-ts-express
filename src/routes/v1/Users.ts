@@ -1,5 +1,5 @@
 import UsersController from '../../controllers/Users';
-import AuthMiddleware from '../../shared/middlewares/Auth';
+import AuthMiddleware from '../../shared/middleware/Auth';
 import { UserSchemas } from '../../shared/validations/Users';
 
 import { Router } from 'express';

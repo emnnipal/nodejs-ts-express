@@ -29,5 +29,5 @@ jobs:
           "pnpm lint" \
           "pnpm check:types" \
           "pnpm test" \
-          "pnpm prettier --check --ignore-unknown ./src/*" \
-          "git diff --cached --name-only | npx cspell --no-summary --no-progress --no-must-find-files --file-list stdin"
+          "pnpm prettier --check --ignore-unknown ." \
+          "npx cspell ./ --no-progress --no-must-find-files"

@@ -1,6 +1,6 @@
 import usersRoute from './Users';
 
-import AuthMiddleware from '../../shared/middlewares/Auth';
+import AuthMiddleware from '../../shared/middleware/Auth';
 
 import { Router } from 'express';
 
