@@ -29,5 +29,5 @@ jobs:
           "pnpm lint" \
           "pnpm check:types" \
           "pnpm test" \
-          "pnpm prettier --check --ignore-unknown ." \
+          "pnpm prettier --check --ignore-unknown ./" \
           "npx cspell ./ --no-progress --no-must-find-files"
