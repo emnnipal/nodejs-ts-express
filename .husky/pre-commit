@@ -3,4 +3,5 @@
 
 npx concurrently -g \
 "npx lint-staged --concurrent false" \
-"npm run check:types"
+"npm run check:types" \
+"git diff --cached --name-only | npx cspell --no-summary --no-progress --no-must-find-files --file-list stdin"

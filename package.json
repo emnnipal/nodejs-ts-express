@@ -52,6 +52,7 @@
     "concurrently": "^7.6.0",
     "cpy": "^9.0.1",
     "cross-env": "^7.0.3",
+    "cspell": "^6.27.0",
     "esbuild": "^0.16.4",
     "esbuild-node-tsc": "^2.0.4",
     "eslint": "^8.29.0",
