@@ -5,7 +5,6 @@
     "source.fixAll.eslint": true
   },
   "eslint.useESLintClass": true,
-  "eslint.alwaysShowStatus": true,
   "eslint.validate": ["javascript", "typescript"],
   "search.exclude": {
     "**/node_modules": true,
