@@ -1,4 +1,4 @@
-import { orderSchema } from './validations';
+import { createOrderSchema } from './validations';
 
 import OrdersController from '../../controllers/orders';
 import AuthMiddleware from '../shared/middleware/auth';
@@ -11,6 +11,6 @@ export const ordersRoute: Router = Router();
 ordersRoute.post(
   '/',
   AuthMiddleware.verifyAuthToken,
-  bodyValidation(orderSchema),
+  bodyValidation(createOrderSchema),
   OrdersController.create
 );

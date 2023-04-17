@@ -19,7 +19,7 @@ export const openApiSchema = swaggerJsdoc(options);
  * @openapi
  * components:
  *  securitySchemes:
- *    firebase-token:
+ *    auth-token:
  *      type: apiKey
  *      name: x-auth-token
  *      in: header
