@@ -1,7 +1,17 @@
 {
   "version": "0.2",
   "language": "en",
-  "words": ["pnpm", "etsc", "ormconfig", "emarketeer", "postbuild", "commitlint", "asynciterable"],
+  "words": [
+    "pnpm",
+    "etsc",
+    "ormconfig",
+    "emarketeer",
+    "postbuild",
+    "commitlint",
+    "asynciterable",
+    "topbar",
+    "openapi"
+  ],
   "flagWords": [],
   "ignorePaths": [
     "node_modules/",
