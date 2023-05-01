@@ -38,6 +38,7 @@ jobs:
     steps:
       - name: Extract branch name from ${{ inputs.branch }}
         shell: bash
+        # remove refs/heads prefix in INPUT_BRANCH using ${INPUT_BRANCH#refs/heads/}
         run: echo "BRANCH=${INPUT_BRANCH#refs/heads/}" >> $GITHUB_OUTPUT
         id: extract_branch
         env:
